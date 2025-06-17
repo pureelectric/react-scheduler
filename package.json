@@ -1,6 +1,6 @@
 {
-  "name": "@wearemothership/react-scheduler",
-  "version": "3.1.2",
+  "name": "@pureelectric/react-scheduler",
+  "version": "0.0.1",
   "description": "React scheduler component based on Material-UI & date-fns",
   "files": [
     "dist"
@@ -40,7 +40,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/wearemothership/react-scheduler.git"
+    "url": "https://github.com/pureelectric/react-scheduler.git"
   },
   "keywords": [
     "react",
@@ -51,7 +51,7 @@
   "author": "Aldabil",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/wearemothership/react-scheduler/issues"
+    "url": "https://github.com/pureelectric/react-scheduler/issues"
   },
   "devDependencies": {
     "@emotion/react": "^11.14.0",
