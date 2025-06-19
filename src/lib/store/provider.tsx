@@ -229,7 +229,7 @@ export const StoreProvider = ({ children, initial }: Props) => {
   );
 
   const onResizeEnd = useCallback(
-    (ev: DragEvent<HTMLElement>, event: ProcessedEvent, minuteHeight: number) => {
+    async (ev: DragEvent<HTMLElement>, event: ProcessedEvent, minuteHeight: number) => {
       const eventItem = ev.currentTarget.closest("div.rs__event__item") as HTMLDivElement | null;
       if (eventItem) {
         const { height } = eventItem.getBoundingClientRect();
@@ -248,7 +248,7 @@ export const StoreProvider = ({ children, initial }: Props) => {
         // Remote
         try {
           triggerLoading(true);
-          const _event = state.onEventResize(ev, updatedEvent, event);
+          const _event = await state.onEventResize(ev, updatedEvent, event);
           if (_event) {
             confirmEvent(_event, "edit");
           }
