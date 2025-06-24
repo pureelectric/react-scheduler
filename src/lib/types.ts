@@ -303,7 +303,7 @@ export interface SchedulerProps {
     event: DragEvent<HTMLElement>,
     updatedEvent: ProcessedEvent,
     originalEvent: ProcessedEvent
-  ): ProcessedEvent | void;
+  ): Promise<ProcessedEvent | void>;
   /**
    *
    */

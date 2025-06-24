@@ -82,6 +82,7 @@ const useDragAttributes = (event: ProcessedEvent) => {
         } else {
           const cell = e.currentTarget.closest(".rs__event__item") as HTMLElement;
           if (cell && headerRect && gridRect) {
+            cell.style.zIndex = "999";
             const diff = [e.clientX - startPos[0], e.clientY - startPos[1]];
             cell.style.transform = `translate(${diff[0]}px, ${diff[1]}px)`;
             let rect = cell.getBoundingClientRect();
@@ -137,6 +138,7 @@ const useDragAttributes = (event: ProcessedEvent) => {
           if (cell) {
             cell.removeChild(timeCell);
             cell.style.transform = "unset";
+            cell.style.zIndex = "";
           }
           const dateString = timeCell.dataset.time;
           if (dateString) {
