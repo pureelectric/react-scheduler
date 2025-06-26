@@ -1,4 +1,4 @@
-import { useEffect, useCallback, JSX } from "react";
+import { useEffect, useCallback, JSX, useMemo } from "react";
 import { addDays, eachWeekOfInterval, endOfMonth, startOfMonth } from "date-fns";
 import { CellRenderedProps, DayHours, DefaultResource } from "../types";
 import { getResourcedEvents, sortEventsByTheEarliest } from "../helpers/generals";
@@ -35,19 +35,22 @@ const Month = () => {
   } = useStore();
 
   const { weekStartOn, weekDays } = month!;
-  const monthStart = startOfMonth(selectedDate);
-  const monthEnd = endOfMonth(selectedDate);
   useEffect(() => {
     setMinuteHeight();
   }, [setMinuteHeight]);
-  const eachWeekStart = eachWeekOfInterval(
-    {
-      start: monthStart,
-      end: monthEnd,
-    },
-    { weekStartsOn: weekStartOn }
-  );
-  const daysList = weekDays.map((d) => addDays(eachWeekStart[0], d));
+  const { eachWeekStart, daysList } = useMemo(() => {
+    const monthStart = startOfMonth(selectedDate);
+    const monthEnd = endOfMonth(selectedDate);
+    const eachWeekStart = eachWeekOfInterval(
+      {
+        start: monthStart,
+        end: monthEnd,
+      },
+      { weekStartsOn: weekStartOn }
+    );
+    const daysList = weekDays.map((d) => addDays(eachWeekStart[0], d));
+    return { eachWeekStart, daysList };
+  }, [selectedDate, weekStartOn, weekDays]);
 
   const fetchEvents = useCallback(async () => {
     try {
@@ -67,8 +70,7 @@ const Month = () => {
     } finally {
       triggerLoading(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [daysList.length, getRemoteEvents]);
+  }, [eachWeekStart, daysList.length, getRemoteEvents, handleState, triggerLoading]);
 
   useEffect(() => {
     if (getRemoteEvents instanceof Function) {

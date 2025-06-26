@@ -104,8 +104,7 @@ const Day = () => {
     } finally {
       triggerLoading(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getRemoteEvents]);
+  }, [START_TIME, END_TIME, getRemoteEvents, handleState, triggerLoading]);
 
   useEffect(() => {
     if (getRemoteEvents instanceof Function) {

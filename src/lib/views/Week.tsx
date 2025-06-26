@@ -37,10 +37,14 @@ const Week = () => {
     setMinuteHeight,
   } = useStore();
   const { weekStartOn, weekDays, startHour, endHour, step } = week!;
-  const _weekStart = startOfWeek(selectedDate, { weekStartsOn: weekStartOn });
-  const daysList = weekDays.map((d) => addDays(_weekStart, d));
-  const weekStart = startOfDay(daysList[0]);
-  const weekEnd = endOfDay(daysList[daysList.length - 1]);
+  const { weekStart, weekEnd, daysList } = useMemo(() => {
+    const _weekStart = startOfWeek(selectedDate, { weekStartsOn: weekStartOn });
+    const daysList = weekDays.map((d) => addDays(_weekStart, d));
+    const weekStart = startOfDay(daysList[0]);
+    const weekEnd = endOfDay(daysList[daysList.length - 1]);
+    return { weekStart, weekEnd, daysList };
+  }, [selectedDate, weekStartOn, weekDays]);
+
   const [hours, CELL_HEIGHT, MINUTE_HEIGHT] = useMemo(() => {
     const START_TIME = set(selectedDate, { hours: startHour, minutes: 0, seconds: 0 });
     const END_TIME = set(selectedDate, { hours: endHour, minutes: -step, seconds: 0 });
@@ -77,8 +81,7 @@ const Week = () => {
     } finally {
       triggerLoading(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getRemoteEvents]);
+  }, [weekStart, weekEnd, getRemoteEvents, handleState, triggerLoading]);
 
   useEffect(() => {
     if (getRemoteEvents instanceof Function) {

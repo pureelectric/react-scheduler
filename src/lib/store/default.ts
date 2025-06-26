@@ -4,26 +4,26 @@ import { getOneView, getTimeZonedDate } from "../helpers/generals";
 
 const defaultMonth = {
   weekDays: [0, 1, 2, 3, 4, 5, 6],
-  weekStartOn: 6,
-  startHour: 9,
-  endHour: 17,
+  weekStartOn: 1,
+  startHour: 7,
+  endHour: 19,
   navigation: true,
   disableGoToDay: false,
 };
 
 const defaultWeek = {
   weekDays: [0, 1, 2, 3, 4, 5, 6],
-  weekStartOn: 6,
-  startHour: 9,
-  endHour: 17,
+  weekStartOn: 1,
+  startHour: 7,
+  endHour: 19,
   step: 60,
   navigation: true,
   disableGoToDay: false,
 };
 
 const defaultDay = {
-  startHour: 9,
-  endHour: 17,
+  startHour: 7,
+  endHour: 19,
   step: 60,
   navigation: true,
 };
