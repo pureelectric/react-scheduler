@@ -13,7 +13,7 @@ timeCell.style.position = "absolute";
 timeCell.style.top = "-20px";
 timeCell.style.width = "100%";
 timeCell.style.textAlign = "center";
-timeCell.style.fontSize = "12px";
+timeCell.style.fontSize = "16px";
 
 const findRsCell = (
   bounds: DOMRect,
@@ -38,7 +38,7 @@ const findRsCell = (
 };
 
 const useDragAttributes = (event: ProcessedEvent) => {
-  const { setCurrentDragged, minuteHeight, currentDragged, onDrop } = useStore();
+  const { setCurrentDragged, minuteHeight, currentDragged, onDrop, locale, stepDrag } = useStore();
   const theme = useTheme();
   const headerRect = document.querySelector(".rs__header")?.getBoundingClientRect();
   const gridRect = document.querySelector("#rs__grid")?.getBoundingClientRect();
@@ -113,9 +113,15 @@ const useDragAttributes = (event: ProcessedEvent) => {
               const mins = topDiff / minuteHeight;
               if (dateString) {
                 const dd = new Date(dateString);
-                const newDD = addMinutes(dd, mins);
+                let newDD: Date;
+                if (stepDrag) {
+                  const reCalAddMins = Math.round(mins / stepDrag) * stepDrag;
+                  newDD = addMinutes(dd, reCalAddMins);
+                } else {
+                  newDD = addMinutes(dd, mins);
+                }
                 timeCell.dataset.time = newDD.toString();
-                timeCell.innerText = format(newDD, "Pp");
+                timeCell.innerText = format(newDD, "Pp", { locale });
               }
             }
           }

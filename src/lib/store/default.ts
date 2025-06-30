@@ -131,6 +131,7 @@ export const defaultProps = (props: Partial<SchedulerProps>) => {
     resizable: true,
     hourFormat: hourFormat || "12",
     draggable: true,
+    stepDrag: 30,
     agenda,
     enableAgenda: typeof agenda === "undefined" || agenda,
     ...otherProps,

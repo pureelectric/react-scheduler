@@ -328,6 +328,11 @@ export interface SchedulerProps {
    */
   draggable?: boolean;
   /**
+   * If event is dragging, set step of dragging in minutes. Only support views: "day" | "week"
+   * @default 30
+   */
+  stepDrag?: number;
+  /**
    * If event is resizable, applied to all events globally, overridden by event specific resizable prop
    * @default true
    */
