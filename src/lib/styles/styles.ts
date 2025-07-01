@@ -178,6 +178,7 @@ export const EventItemPaper = styled(Paper)<{ disabled?: boolean }>(({ disabled 
   cursor: disabled ? "not-allowed" : "pointer",
   overflow: "hidden",
   position: "relative",
+  border: "1px solid",
   "& .MuiButtonBase-root": {
     width: "100%",
     height: "100%",

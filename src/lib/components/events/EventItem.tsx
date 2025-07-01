@@ -79,6 +79,8 @@ const EventItem = ({ event, multiday, hasPrev, hasNext, showdate = true }: Event
       }
     }
 
+    const bgcolor = event.disabled ? "#d0d0d0" : event.color || theme.palette.primary.main;
+
     let item = (
       <div style={{ padding: "2px 6px" }}>
         <Typography variant="subtitle2" style={{ fontSize: 12 }} noWrap>
@@ -133,8 +135,10 @@ const EventItem = ({ event, multiday, hasPrev, hasNext, showdate = true }: Event
         key={`${event.start.getTime()}_${event.end.getTime()}_${event.event_id}`}
         disabled={event.disabled}
         sx={{
-          bgcolor: event.disabled ? "#d0d0d0" : event.color || theme.palette.primary.main,
-          color: event.disabled ? "#808080" : event.textColor || theme.palette.primary.contrastText,
+          bgcolor: bgcolor,
+          color: event.disabled
+            ? "#808080"
+            : event.textColor || theme.palette.getContrastText(bgcolor),
           ...(event.sx || {}),
         }}
       >
