@@ -57,6 +57,9 @@ export const AgendaDiv = styled("div")(({ theme }) => ({
   borderStyle: "solid",
   borderColor: theme.palette.grey[300],
   borderWidth: "1px 1px 0 0",
+  "& .rs__today_cell": {
+    backgroundColor: alpha(theme.palette.primary.main, 0.3),
+  },
   "& > .rs__agenda_row": {
     display: "flex",
     "& >.rs__agenda__cell": {
@@ -168,6 +171,9 @@ export const TableGrid = styled("div")<{
     "&:not(.rs__time)": {
       minWidth: 65,
     },
+  },
+  "& .rs__today_cell": {
+    backgroundColor: alpha(theme.palette.primary.main, 0.3),
   },
 }));
 

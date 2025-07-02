@@ -80,7 +80,11 @@ const MonthTable = ({ daysList, resource, eachWeekStart }: Props) => {
             });
           const isToday = isTimeZonedToday({ dateLeft: today, timeZone });
           return (
-            <span style={{ height: CELL_HEIGHT }} key={d.toString()} className="rs__cell">
+            <span
+              style={{ height: CELL_HEIGHT }}
+              key={d.toString()}
+              className={`rs__cell ${isToday ? "rs__today_cell" : ""}`}
+            >
               <Cell
                 start={start}
                 end={end}

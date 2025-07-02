@@ -1,4 +1,4 @@
-import { enUS } from "date-fns/locale";
+import { enAU } from "date-fns/locale";
 import { SchedulerProps } from "../types";
 import { getOneView, getTimeZonedDate } from "../helpers/generals";
 
@@ -125,7 +125,7 @@ export const defaultProps = (props: Partial<SchedulerProps>) => {
     resourceViewMode: resourceViewMode || "default",
     direction: direction || "ltr",
     dialogMaxWidth: dialogMaxWidth || "md",
-    locale: enUS,
+    locale: enAU,
     deletable: true,
     editable: true,
     resizable: true,
