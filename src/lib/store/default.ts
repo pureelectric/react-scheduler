@@ -1,29 +1,29 @@
-import { enUS } from "date-fns/locale";
+import { enAU } from "date-fns/locale";
 import { SchedulerProps } from "../types";
 import { getOneView, getTimeZonedDate } from "../helpers/generals";
 
 const defaultMonth = {
   weekDays: [0, 1, 2, 3, 4, 5, 6],
-  weekStartOn: 6,
-  startHour: 9,
-  endHour: 17,
+  weekStartOn: 1,
+  startHour: 7,
+  endHour: 19,
   navigation: true,
   disableGoToDay: false,
 };
 
 const defaultWeek = {
   weekDays: [0, 1, 2, 3, 4, 5, 6],
-  weekStartOn: 6,
-  startHour: 9,
-  endHour: 17,
+  weekStartOn: 1,
+  startHour: 7,
+  endHour: 19,
   step: 60,
   navigation: true,
   disableGoToDay: false,
 };
 
 const defaultDay = {
-  startHour: 9,
-  endHour: 17,
+  startHour: 7,
+  endHour: 19,
   step: 60,
   navigation: true,
 };
@@ -125,12 +125,13 @@ export const defaultProps = (props: Partial<SchedulerProps>) => {
     resourceViewMode: resourceViewMode || "default",
     direction: direction || "ltr",
     dialogMaxWidth: dialogMaxWidth || "md",
-    locale: enUS,
+    locale: enAU,
     deletable: true,
     editable: true,
     resizable: true,
     hourFormat: hourFormat || "12",
     draggable: true,
+    stepDrag: 30,
     agenda,
     enableAgenda: typeof agenda === "undefined" || agenda,
     ...otherProps,

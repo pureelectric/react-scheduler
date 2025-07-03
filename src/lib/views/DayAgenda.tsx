@@ -4,7 +4,7 @@ import { AgendaDiv } from "../styles/styles";
 import { ProcessedEvent } from "../types";
 import useStore from "../hooks/useStore";
 import { Typography } from "@mui/material";
-import { filterTodayAgendaEvents } from "../helpers/generals";
+import { filterTodayAgendaEvents, isTimeZonedToday } from "../helpers/generals";
 import AgendaEventsList from "../components/events/AgendaEventsList";
 import EmptyAgenda from "../components/events/EmptyAgenda";
 
@@ -12,7 +12,7 @@ type Props = {
   events: ProcessedEvent[];
 };
 const DayAgenda = ({ events }: Props) => {
-  const { day, locale, selectedDate, translations, alwaysShowAgendaDays } = useStore();
+  const { day, locale, selectedDate, translations, alwaysShowAgendaDays, timeZone } = useStore();
   const { headRenderer } = day!;
 
   const dayEvents = useMemo(() => {
@@ -23,9 +23,11 @@ const DayAgenda = ({ events }: Props) => {
     return <EmptyAgenda />;
   }
 
+  const today = isTimeZonedToday({ dateLeft: selectedDate, timeZone });
+
   return (
     <AgendaDiv>
-      <div className="rs__agenda_row rs__today_cell">
+      <div className={`rs__agenda_row ${today ? "rs__today_cell" : ""}`}>
         <div className="rs__cell rs__agenda__cell">
           {typeof headRenderer === "function" ? (
             <div>{headRenderer(selectedDate)}</div>

@@ -4,7 +4,7 @@ import { defaultProps, initialStore } from "./default";
 import { StoreContext } from "./context";
 import { SchedulerState, SelectedRange, Store } from "./types";
 import { arraytizeFieldVal, getAvailableViews } from "../helpers/generals";
-import { addMinutes, differenceInMinutes, isEqual } from "date-fns";
+import { addMinutes, differenceInMinutes, isEqual, set as setDate } from "date-fns";
 import { View } from "../components/nav/Navigation";
 
 type Props = {
@@ -216,28 +216,66 @@ export const StoreProvider = ({ children, initial }: Props) => {
 
   const onResize = useCallback(
     (ev: DragEvent<HTMLElement>, event: ProcessedEvent, minuteHeight: number): Date | undefined => {
-      const eventItem = ev.currentTarget.closest("div.rs__event__item") as HTMLDivElement | null;
-      if (eventItem) {
-        const { top } = eventItem.getBoundingClientRect();
-        const diff = Math.max(ev.clientY - top, minuteHeight);
-        const minutes = diff / minuteHeight;
-        eventItem.style.height = `${diff}px`;
-        return addMinutes(event.start, minutes);
+      const eventItem = ev.currentTarget.closest<HTMLDivElement>(".rs__event__item");
+      const grid = document.querySelector<HTMLDivElement>("#rs__grid");
+      if (eventItem && grid) {
+        const gridRect = grid.getBoundingClientRect();
+        const eventRect = eventItem.getBoundingClientRect();
+        const clientY = Math.min(ev.clientY, gridRect.bottom);
+        const diff = Math.max(clientY - eventRect.top, minuteHeight);
+        let minutes = Math.floor(diff / minuteHeight);
+        let newEndTime = addMinutes(event.start, minutes);
+        //check end hour
+        const viewProps = state[state.view];
+        if (viewProps && "endHour" in viewProps) {
+          const maxEndTime = setDate(event.start, {
+            hours: viewProps.endHour,
+            minutes: 0,
+            seconds: 0,
+          });
+          if (newEndTime > maxEndTime) {
+            newEndTime = maxEndTime;
+          }
+        }
+        //End-check endHour
+        // Recalculate height
+        minutes = differenceInMinutes(newEndTime, event.start);
+        const newHeight = minutes * minuteHeight;
+        eventItem.style.height = `${newHeight}px`;
+        return newEndTime;
       }
     },
-    []
+    [state]
   );
 
   const onResizeEnd = useCallback(
     async (ev: DragEvent<HTMLElement>, event: ProcessedEvent, minuteHeight: number) => {
-      const eventItem = ev.currentTarget.closest("div.rs__event__item") as HTMLDivElement | null;
-      if (eventItem) {
-        const { height } = eventItem.getBoundingClientRect();
-        const minutes = height / minuteHeight;
+      const eventItem = ev.currentTarget.closest<HTMLDivElement>(".rs__event__item");
+      const grid = document.querySelector<HTMLDivElement>("#rs__grid");
+      if (eventItem && grid) {
+        const gridRect = grid.getBoundingClientRect();
+        const eventRect = eventItem.getBoundingClientRect();
+
+        const clientY = Math.min(ev.clientY, gridRect.bottom);
+        const diff = Math.max(clientY - eventRect.top, minuteHeight);
+        const minutes = Math.round(diff / minuteHeight);
+        let newEndTime = addMinutes(event.start, minutes);
+        //check endHour
+        const viewProps = state[state.view];
+        if (viewProps) {
+          const { endHour } = viewProps;
+          if (endHour) {
+            const maxEndTime = setDate(event.start, { hours: endHour, minutes: 0, seconds: 0 });
+            if (newEndTime > maxEndTime) {
+              newEndTime = maxEndTime;
+            }
+          }
+        }
+        //End-check endHour
 
         const updatedEvent: ProcessedEvent = {
           ...event,
-          end: addMinutes(event.start, minutes),
+          end: newEndTime,
           recurring: undefined,
         };
 

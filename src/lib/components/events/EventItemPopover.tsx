@@ -94,7 +94,9 @@ const EventItemPopover = ({ anchorEl, event, onTriggerViewer }: Props) => {
           <Box
             sx={{
               bgcolor: event.color || theme.palette.primary.main,
-              color: theme.palette.primary.contrastText,
+              color:
+                event.textColor ||
+                theme.palette.getContrastText(event.color || theme.palette.primary.main),
             }}
           >
             <div className="rs__popper_actions">

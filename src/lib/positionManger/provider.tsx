@@ -3,7 +3,7 @@ import { PositionManagerState, PositionContext } from "./context";
 import useStore from "../hooks/useStore";
 import { DefaultResource, FieldProps, ProcessedEvent, ResourceFields } from "../types";
 import { getResourcedEvents, sortEventsByTheEarliest } from "../helpers/generals";
-import { eachDayOfInterval, format } from "date-fns";
+import { eachDayOfInterval, format, isSameDay, startOfDay } from "date-fns";
 
 type Props = {
   children: React.ReactNode;
@@ -46,11 +46,18 @@ const setEventPositionsWithResources = (
   if (resources.length) {
     for (const resource of resources) {
       const resourcedEvents = getResourcedEvents(sorted, resource, rFields, fields);
-      const positions = setEventPositions(resourcedEvents);
+      // Filter to only include multi-day or all-day events for positioning
+      const multiDayEvents = resourcedEvents.filter(
+        (e) => e.allDay || !isSameDay(startOfDay(e.start), startOfDay(e.end))
+      );
+      const positions = setEventPositions(multiDayEvents);
       slots[resource[rFields.idField]] = positions;
     }
   } else {
-    slots.all = setEventPositions(sorted);
+    const multiDayEvents = sorted.filter(
+      (e) => e.allDay || !isSameDay(startOfDay(e.start), startOfDay(e.end))
+    );
+    slots.all = setEventPositions(multiDayEvents);
   }
 
   return slots;

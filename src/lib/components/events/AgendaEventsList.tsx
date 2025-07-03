@@ -82,7 +82,8 @@ const AgendaEventsList = ({ day, events }: AgendaEventsListProps) => {
                     bgcolor: event.disabled ? "#d0d0d0" : event.color || theme.palette.primary.main,
                     color: event.disabled
                       ? "#808080"
-                      : event.textColor || theme.palette.primary.contrastText,
+                      : event.textColor ||
+                        theme.palette.getContrastText(event.color || theme.palette.primary.main),
                   }}
                 >
                   {event.agendaAvatar || " "}

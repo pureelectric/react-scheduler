@@ -57,6 +57,9 @@ export const AgendaDiv = styled("div")(({ theme }) => ({
   borderStyle: "solid",
   borderColor: theme.palette.grey[300],
   borderWidth: "1px 1px 0 0",
+  "& .rs__today_cell": {
+    backgroundColor: alpha(theme.palette.primary.main, 0.3),
+  },
   "& > .rs__agenda_row": {
     display: "flex",
     "& >.rs__agenda__cell": {
@@ -169,6 +172,9 @@ export const TableGrid = styled("div")<{
       minWidth: 65,
     },
   },
+  "& .rs__today_cell": {
+    backgroundColor: alpha(theme.palette.primary.main, 0.3),
+  },
 }));
 
 export const EventItemPaper = styled(Paper)<{ disabled?: boolean }>(({ disabled }) => ({
@@ -178,6 +184,7 @@ export const EventItemPaper = styled(Paper)<{ disabled?: boolean }>(({ disabled 
   cursor: disabled ? "not-allowed" : "pointer",
   overflow: "hidden",
   position: "relative",
+  border: "1px solid",
   "& .MuiButtonBase-root": {
     width: "100%",
     height: "100%",
