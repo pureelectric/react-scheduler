@@ -1,5 +1,5 @@
 {
-  "name": "@pureelectric/react-scheduler",
+  "name": "@pure-electric/react-scheduler",
   "version": "0.0.1",
   "description": "React scheduler component based on Material-UI & date-fns",
   "files": [
