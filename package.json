@@ -5,6 +5,9 @@
   "files": [
     "*"
   ],
+  "publishConfig": {
+    "access": "public",
+  },
   "type": "module",
   "scripts": {
     "start": "vite serve",
