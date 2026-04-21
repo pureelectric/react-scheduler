@@ -103,8 +103,8 @@ const EditorInput = ({
       multiline={multiline}
       rows={rows}
       style={{ width: "100%" }}
-      InputProps={{
-        placeholder: placeholder || "",
+      slotProps={{
+        input: { placeholder: placeholder || "" },
       }}
     />
   );

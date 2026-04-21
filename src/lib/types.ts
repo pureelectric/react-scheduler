@@ -101,11 +101,10 @@ export interface Translations {
 
 export type InputTypes = "input" | "date" | "select" | "hidden";
 
-export interface EventRendererProps
-  extends Pick<
-    React.HTMLAttributes<HTMLElement>,
-    "draggable" | "onDragStart" | "onDragEnd" | "onDragOver" | "onDragEnter" | "onClick"
-  > {
+export interface EventRendererProps extends Pick<
+  React.HTMLAttributes<HTMLElement>,
+  "draggable" | "onDragStart" | "onDragEnd" | "onDragOver" | "onDragEnter" | "onClick"
+> {
   event: ProcessedEvent;
 }
 export interface FieldInputProps {
@@ -219,7 +218,7 @@ export interface SchedulerProps {
   /** */
   navigationPickerProps?: Partial<
     Omit<
-      DateCalendarProps<Date>,
+      DateCalendarProps,
       "open" | "onClose" | "openTo" | "views" | "value" | "readOnly" | "onChange"
     >
   >;

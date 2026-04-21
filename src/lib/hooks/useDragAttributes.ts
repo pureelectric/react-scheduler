@@ -52,6 +52,7 @@ const useDragAttributes = (event: ProcessedEvent) => {
       e.currentTarget.style.backgroundColor = theme.palette.error.main;
     },
     onDrag: (e: DragEvent<HTMLElement>) => {
+      if (e.clientX === 0 && e.clientY === 0) return;
       if (currentDragged && startPos) {
         if (currentDragged.allDay) {
           const cell = e.currentTarget.closest(".rs__multi_day") as HTMLElement;
@@ -106,7 +107,7 @@ const useDragAttributes = (event: ProcessedEvent) => {
 
             if (found && minuteHeight && timeCell) {
               cell.appendChild(timeCell);
-              const button = found.querySelector("& > button") as HTMLButtonElement;
+              const button = found.querySelector("button") as HTMLButtonElement;
               const fRect = found.getBoundingClientRect();
               const dateString = button?.dataset.start;
               const topDiff = rect.top - fRect.top;
@@ -142,7 +143,7 @@ const useDragAttributes = (event: ProcessedEvent) => {
         } else {
           const cell = e.currentTarget.closest(".rs__event__item") as HTMLElement;
           if (cell) {
-            cell.removeChild(timeCell);
+            timeCell.remove();
             cell.style.transform = "unset";
             cell.style.zIndex = "";
           }

@@ -83,7 +83,7 @@ const MonthEvents = ({
         elements.push(
           <Typography
             key={i}
-            width="100%"
+            sx={{ width: "100%" }}
             className="rs__multi_day rs__hover__op"
             style={{ top: topSpace, fontSize: 11 }}
             onClick={(e) => {

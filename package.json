@@ -1,6 +1,6 @@
 {
   "name": "@pure-electric/react-scheduler",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "React scheduler component based on Material-UI & date-fns",
   "files": [
     "*"
@@ -102,9 +102,9 @@
     "vite-tsconfig-paths": "^5.1.4"
   },
   "dependencies": {
-    "@mui/icons-material": "^7.0.0",
-    "@mui/material": "^7.0.0",
-    "@mui/x-date-pickers": "^7.0.0",
+    "@mui/icons-material": "^9.0.0",
+    "@mui/material": "^9.0.0",
+    "@mui/x-date-pickers": "^9.0.0",
     "date-fns": "^4.1.0",
     "rrule": "^2.8.1"
   },
